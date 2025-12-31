@@ -14,17 +14,6 @@ library(purrr)
 datact50<-as.data.frame(fread("G:/HCC CODEX/nonsigCN windows/adata_nonsig_purity50_CN_CT_radius50.csv"))
 cell<-datact50[,c('imageid','cluster_kmeans','XMin','YMin')]
 
-##去掉样本量少的spot
-frequency <- cell %>%
-  group_by(imageid) %>%
-  summarise(Frequency = n()) %>%
-  ungroup()
-
-frequency <- frequency %>%
-  filter(Frequency >= 500)
-
-cell<- semi_join(cell, frequency, by = "imageid")
-
 #读取临床数据
 g <- read_excel("G:/HCC CODEX/clinic data.xlsx")
 g <- g[,c('Class','PatientID_1','HepatitisB','LiverCirrhosis')]
